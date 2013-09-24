@@ -25,6 +25,17 @@ defmodule Sequence do
     collection |> spawn_children(fun) |> collect_results
   end
 
+  """
+  Spawns children for each element in the collection, returns a list of pids
+  """
+  defp spawn_children(collection, fun) do
+    collection |> map( spawn_child(&1, fun) )
+  end
+
+  defp spawn_child(elem, fun) do
+    spawn Sequence, :child_execution, [ self, elem, fun ]
+  end
+
   def child_execution(parent_pid, elem, fun) do
     parent_pid <- { self, fun.(elem) }
   end
