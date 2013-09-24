@@ -1,19 +1,17 @@
 defmodule Sequence do
 
   @doc """
-  An imperformant implentation of fibonacci numbers
+  An performant implentation of fibonacci numbers
 
   [ 36, 37, 38, 39, 39, 39, 39, 39 ] |> Sequence.map( Sequence.fib(&1) )
   [ 36, 37, 38, 39, 39, 39, 39, 39 ] |> Sequence.pmap( Sequence.fib(&1) )
 
-  end
-
   iex> Sequence.fib(10)
   55
   """
-  def fib(0), do: 0
-  def fib(1), do: 1
-  def fib(n), do: fib(n-1) + fib(n-2)
+  def  fib(number),       do: fib(0, 1, number)
+  defp fib(_, b, 1),      do: b
+  defp fib(a, b, number), do: fib(b, a + b, number - 1)
 
   @doc """
   Maps a collection to another collection applying the given function to each element.
