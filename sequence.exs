@@ -1,5 +1,11 @@
 defmodule Sequence do
 
+  @doc """
+  Maps a collection to another collection applying the given function to each element.
+
+    iex> Sequence.map( [ 1, 2, 3 ], &1+&1)
+    [ 1, 4, 9 ]
+  """
   def map([], _fun), do: []
   def map([h|t], fun), do: [ fun.(h) | map(t, fun) ]
 
@@ -10,6 +16,7 @@ ExUnit.start
 
 defmodule SequenceTest do
   use ExUnit.Case
+  doctest Sequence
 
   test 'map an empty list' do
     assert [] |> Sequence.map(&1 * &1) == []
