@@ -20,4 +20,15 @@ ExUnit.start
 defmodule SequenceTest do
   use ExUnit.Case
   doctest Sequence
+
+  test 'a child executes a function and sends the result back' do
+    #child_pid == self
+    Sequence.child_execution( self, 3, &1 * &1 )
+    assert_receive { self, 9 }
+
+    #with a real child
+    child = spawn Sequence, :child_execution, [ self, 4, &1 * &1 ]
+    assert_receive { child, 16 }
+  end
+
 end
