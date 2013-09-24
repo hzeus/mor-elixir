@@ -1,3 +1,10 @@
+defmodule Sequence do
+
+  def map([], _fun), do: []
+
+end
+
+
 ExUnit.start
 
 defmodule SequenceTest do
