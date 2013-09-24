@@ -1,6 +1,7 @@
 defmodule Sequence do
 
   def map([], _fun), do: []
+  def map([h|t], fun), do: [ fun.(h) | map(t, fun) ]
 
 end
 
