@@ -12,6 +12,10 @@ defmodule Sequence do
   def map([], _fun), do: []
   def map([h|t], fun), do: [ fun.(h) | map(t, fun) ]
 
+  def child_execution(parent_pid, elem, fun) do
+    parent_pid <- { self, fun.(elem) }
+  end
+
 end
 
 
