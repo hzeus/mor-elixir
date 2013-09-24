@@ -12,6 +12,19 @@ defmodule Sequence do
   def map([], _fun), do: []
   def map([h|t], fun), do: [ fun.(h) | map(t, fun) ]
 
+  @doc """
+  Maps a collection to another collection applying the given function to each element.
+
+    iex> Sequence.pmap( [ 1, 2, 3 ], &1 * &1)
+    [ 1, 4, 9 ]
+
+    iex> Sequence.pmap( [], &1 * &1)
+    [ ]
+  """
+  def pmap(collection, fun) do
+    collection |> spawn_children(fun) |> collect_results
+  end
+
   def child_execution(parent_pid, elem, fun) do
     parent_pid <- { self, fun.(elem) }
   end
