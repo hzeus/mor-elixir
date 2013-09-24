@@ -36,6 +36,16 @@ defmodule Sequence do
     spawn Sequence, :child_execution, [ self, elem, fun ]
   end
 
+  defp collect_results(pids) do
+    pids |> map(result_for_pid(&1))
+  end
+
+  defp result_for_pid(pid) do
+    receive do
+      { ^pid, value } -> value
+    end
+  end
+
   def child_execution(parent_pid, elem, fun) do
     parent_pid <- { self, fun.(elem) }
   end
